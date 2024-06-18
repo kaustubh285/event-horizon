@@ -1,6 +1,6 @@
-import { fetchCategories } from "@/lib/Events";
+import { fetchEvents } from "@/lib/Events";
 
 export async function GET() {
-  const categories = await fetchCategories();
-  return Response.json(categories);
+  const events = await fetchEvents();
+  return Response.json(events);
 }
