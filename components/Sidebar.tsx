@@ -1,0 +1,32 @@
+import React from "react";
+import { Category, Event, Location } from "@/typings";
+import EventSidebarAccordion from "./EventSidebarAccordion";
+import { Accordion } from "@chakra-ui/react";
+
+type Props = {
+  allEvents: Event[];
+};
+
+const Sidebar = ({ allEvents }: Props) => {
+  return (
+    <div className='  bg-secondary h-full w-1/4 p-4 text-tertiary'>
+      {/* <p className=' text-xl font-semibold text-center underline'>
+        List of naturally occuring events happening across the globe
+      </p> */}
+
+      <Accordion
+        allowMultiple
+        allowToggle
+        className=' h-full overflow-y-scroll  space-y-2'>
+        {allEvents?.map(
+          (eve: Event) =>
+            eve.description && (
+              <EventSidebarAccordion event={eve} key={eve.id} />
+            )
+        )}
+      </Accordion>
+    </div>
+  );
+};
+
+export default Sidebar;

@@ -1448,7 +1448,7 @@ export const fetchEvents = async () => {
       {
         id: "EONET_6640",
         title: "Kerinci Volcano, Indonesia",
-        description: "",
+        description: "A volcano!!!!!!",
         link: "https://eonet.gsfc.nasa.gov/api/v2.1/events/EONET_6640",
         categories: [
           {
@@ -1523,7 +1523,7 @@ export const fetchEvents = async () => {
       {
         id: "EONET_6523",
         title: "Iceberg A83",
-        description: "",
+        description: "ICE BERG HEADING FOR TITANIC",
         link: "https://eonet.gsfc.nasa.gov/api/v2.1/events/EONET_6523",
         categories: [
           {
