@@ -7159,5 +7159,5 @@ export const fetchEvents = async () => {
       };
     }),
   }));
-  return eventsData;
+  return eventsData.slice(0, 5);
 };

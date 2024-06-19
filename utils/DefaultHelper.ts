@@ -1,19 +1,6 @@
+import { KnownCategoryNames } from "@/typings";
 import { Icon } from "leaflet";
 
-type KnownCategoryNames =
-  | "Drought"
-  | "Dust and Haze"
-  | "Earthquakes"
-  | "Floods"
-  | "Landslides"
-  | "Manmade"
-  | "Sea and Lake Ice"
-  | "Severe Storms"
-  | "Snow"
-  | "Temperature Extremes"
-  | "Volcanoes"
-  | "Water Color"
-  | "Wildfires";
 const categoryIconMapper: Record<KnownCategoryNames, string> = {
   Drought: "drought-icon.png",
   "Dust and Haze": "dust-and-haze-icon.jpg",

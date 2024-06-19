@@ -1,5 +1,6 @@
 "use client";
 
+import Navbar from "@/components/Navbar";
 import dynamic from "next/dynamic";
 
 const Container = dynamic(() => import("@/components/Container"), {
@@ -8,7 +9,8 @@ const Container = dynamic(() => import("@/components/Container"), {
 
 export default function Home() {
   return (
-    <main className='w-screen h-screen'>
+    <main className='w-screen h-screen flex flex-col'>
+      <Navbar />
       <Container />
     </main>
   );

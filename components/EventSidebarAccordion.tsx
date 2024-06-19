@@ -14,8 +14,9 @@ import React from "react";
 
 type Props = {
   event: Event;
+  selectEvent: (event: Event) => void;
 };
-const EventSidebarAccordion = ({ event }: Props) => {
+const EventSidebarAccordion = ({ event, selectEvent }: Props) => {
   return (
     <AccordionItem className=' bg-primary rounded-md'>
       <h2>
@@ -36,6 +37,12 @@ const EventSidebarAccordion = ({ event }: Props) => {
       </h2>
       <AccordionPanel pb={4}>
         <p className=' text-lg'>{event.description}</p>
+
+        <button
+          className='px-3 py-2 rounded-lg bg-sky-500'
+          onClick={() => selectEvent(event)}>
+          View
+        </button>
       </AccordionPanel>
     </AccordionItem>
   );
