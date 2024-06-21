@@ -1,137 +1,86 @@
 "use client";
-import { Category, Event, KnownCategoryNames, Location } from "@/typings";
+import { Category, Event, Location } from "@/typings";
 import React, { useEffect, useState } from "react";
-import { MapContainer, Marker, TileLayer, Popup, useMap } from "react-leaflet";
+
 import "leaflet/dist/leaflet.css";
-import { Icon } from "leaflet";
-import { Select } from "@chakra-ui/react";
+
 import { handleFetch } from "@/utils/FetchHelper";
-import FlyToMarker from "./FlyToMarker";
+
+import Sidebar from "./Sidebar";
+
+import MapArea from "./MapArea";
+import Controls from "./Controls";
 
 const Container = () => {
-  const defaultPosition: Location = [51.505, -0.09];
+  const defaultPosition: Location = [11.505, 10.09];
   const [allCategories, setAllCategories] = useState<Category[] | undefined>();
   const [allEvents, setAllEvents] = useState<Event[] | undefined>();
-
+  const [allEventsBkp, setAllEventsBkp] = useState<Event[] | []>();
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>();
+  const [selectedFilter, setSelectedFilter] = useState<string>("");
 
-  const icon: Icon = new Icon({
-    iconUrl: "marker-icons/red-marker.svg",
-    iconSize: [55, 55],
-    iconAnchor: [30, 41],
-  });
+  const getData = (days: number) => {
+    handleFetch(setAllCategories, setAllEvents, days, setAllEventsBkp);
+  };
+
+  // useEffect(()=>getData(15), []);
 
   useEffect(() => {
-    handleFetch(setAllCategories, setAllEvents);
-  }, []);
+    if (selectedFilter === "all") {
+      setAllEvents(allEventsBkp);
+      return;
+    }
+    const searchedEvents: Event[] =
+      allEventsBkp?.filter((eve: Event) =>
+        eve.categories.some((cat) =>
+          cat.title.toLowerCase().includes(selectedFilter)
+        )
+      ) || [];
 
+    setAllEvents(searchedEvents);
+  }, [selectedFilter, allEventsBkp]);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      setAllEvents(allEventsBkp);
+      return;
+    }
+    const searchedEvents: Event[] =
+      allEventsBkp?.filter(
+        (eve: Event) =>
+          eve.description.toLowerCase().includes(searchQuery) ||
+          eve.title.toLowerCase().includes(searchQuery) ||
+          eve.sources.some((source) =>
+            source.url.toLowerCase().includes(searchQuery)
+          )
+      ) || [];
+
+    setAllEvents(searchedEvents);
+  }, [searchQuery, allEventsBkp]);
   const selectEvent = (event: Event) => {
     setSelectedEvent(event);
   };
   return (
-    <div className=' bg-secondary content'>
-      <div className=' h-full w-full flex flex-col'>
-        <div className=' h-12 flex'>
-          <div className=' w-48'>
-            <Select placeholder='Select option'>
-              <option value={"all"}>All</option>
-              {allCategories?.length &&
-                allCategories.map((cat: Category) => (
-                  <option value={cat.title.toLowerCase()} key={cat.id}>
-                    {cat.title}
-                  </option>
-                ))}
-            </Select>
-          </div>
-        </div>
-        <MapContainer
-          center={defaultPosition}
-          zoom={1}
-          className='map-container '>
-          <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-
-          <Marker position={defaultPosition} icon={icon}>
-            <Popup>Hello there</Popup>
-          </Marker>
-
-          {allEvents?.map((eve: Event) => {
-            // const position = [...eve.geometries[0]?.coordinates].reverse();
-
-            return (
-              <Marker
-                key={eve.id}
-                position={eve.geometries[0]?.coordinates || defaultPosition}
-                icon={getCategoryIcon(eve.categories[0].title)}
-                eventHandlers={{
-                  click: () => selectEvent(eve),
-                }}></Marker>
-            );
-          })}
-
-          {selectedEvent && (
-            <>
-              <Popup
-                position={[
-                  selectedEvent?.geometries[0].coordinates[0] + 0.002,
-                  selectedEvent?.geometries[0].coordinates[1],
-                ]}>
-                {selectedEvent.title}
-              </Popup>
-              <FlyToMarker
-                position={selectedEvent?.geometries[0].coordinates}
-                zoomLevel={15}
-              />
-            </>
-          )}
-          {/* <Popup>{eve.title}</Popup> */}
-        </MapContainer>
+    <div className=' bg-secondary flex-1 h-full w-full p-4 rounded-t-xl flex flex-col space-y-2 '>
+      <Controls
+        allCategories={allCategories}
+        getData={getData}
+        allEventsBkp={allEventsBkp}
+        setSearchQuery={setSearchQuery}
+        setSelectedFilter={setSelectedFilter}
+      />
+      <div className=' h-full flex flex-col space-x-4 md:flex-row  items-stretch justify-around'>
+        <MapArea
+          defaultPosition={defaultPosition}
+          allEvents={allEvents}
+          selectEvent={selectEvent}
+          selectedEvent={selectedEvent}
+        />
+        <Sidebar allEvents={allEvents} selectEvent={selectEvent} />
       </div>
     </div>
   );
 };
 
 export default Container;
-
-let KnownCategoryNames = [
-  "Drought",
-  "Dust and Haze",
-  "Earthquakes",
-  "Floods",
-  "Landslides",
-  "Manmade",
-  "Sea and Lake Ice",
-  "Severe Storms",
-  "Snow",
-  "Temperature",
-  "Volcanoes",
-  "Water Color",
-  "Wildfires",
-];
-
-function getCategoryIcon(category: KnownCategoryNames) {
-  const categoryIconMapper: Record<KnownCategoryNames, string> = {
-    Drought: "drought-icon.png",
-    "Dust and Haze": "dust-and-haze-icon.jpg",
-    Earthquakes: "earthquake-icon.png",
-    Floods: "flood-icon.png",
-    Landslides: "landslide-icon.png",
-    Manmade: "man-made-icon.png",
-    "Sea and Lake Ice": "sea-and-lake-ice-icon.png",
-    "Severe Storms": "severe-storm-icon.png",
-    Snow: "snow-icon.png",
-    "Temperature Extremes": "extreme-temperature-icon.png",
-    Volcanoes: "volcano-icon.png",
-    "Water Color": "water-color-icon.png",
-    Wildfires: "wildfire-icon.png",
-  };
-
-  const icon: Icon = new Icon({
-    iconUrl:
-      `marker-icons/${categoryIconMapper[category]}` ||
-      "marker-icons/red-marker.svg",
-    iconSize: [40, 35],
-    iconAnchor: [30, 41],
-  });
-
-  return icon;
-}

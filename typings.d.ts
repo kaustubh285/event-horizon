@@ -1,6 +1,21 @@
+export type KnownCategoryNames =
+  | "Drought"
+  | "Dust and Haze"
+  | "Earthquakes"
+  | "Floods"
+  | "Landslides"
+  | "Manmade"
+  | "Sea and Lake Ice"
+  | "Severe Storms"
+  | "Snow"
+  | "Temperature Extremes"
+  | "Volcanoes"
+  | "Water Color"
+  | "Wildfires";
+
 export interface SubCategory {
   id: number;
-  title: string;
+  title: KnownCategoryNames;
 }
 
 export interface Category extends SubCategory {
