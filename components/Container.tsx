@@ -10,6 +10,8 @@ import Sidebar from "./Sidebar";
 
 import MapArea from "./MapArea";
 import Controls from "./Controls";
+import Wrapper from "./Wrapper";
+import Image from "next/image";
 
 const Container = () => {
   const defaultPosition: Location = [11.505, 10.09];
@@ -19,12 +21,17 @@ const Container = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>();
   const [selectedFilter, setSelectedFilter] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getData = (days: number) => {
+    setIsLoading(true);
     handleFetch(setAllCategories, setAllEvents, days, setAllEventsBkp);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
 
-  // useEffect(()=>getData(15), []);
+  useEffect(() => getData(15), []);
 
   useEffect(() => {
     if (selectedFilter === "all") {
@@ -62,7 +69,7 @@ const Container = () => {
     setSelectedEvent(event);
   };
   return (
-    <div className=' bg-secondary flex-1 h-full w-full p-4 rounded-t-xl flex flex-col space-y-2 '>
+    <Wrapper className='flex flex-col space-y-2 '>
       <Controls
         allCategories={allCategories}
         getData={getData}
@@ -70,16 +77,35 @@ const Container = () => {
         setSearchQuery={setSearchQuery}
         setSelectedFilter={setSelectedFilter}
       />
-      <div className=' h-full flex flex-col space-x-4 md:flex-row  items-stretch justify-around'>
-        <MapArea
-          defaultPosition={defaultPosition}
-          allEvents={allEvents}
-          selectEvent={selectEvent}
-          selectedEvent={selectedEvent}
-        />
-        <Sidebar allEvents={allEvents} selectEvent={selectEvent} />
+      <div className=' h-full flex flex-col space-x-4 md:flex-row  items-stretch justify-around relative'>
+        {!isLoading && (
+          <>
+            <MapArea
+              defaultPosition={defaultPosition}
+              allEvents={allEvents}
+              selectEvent={selectEvent}
+              selectedEvent={selectedEvent}
+            />
+            <Sidebar allEvents={allEvents} selectEvent={selectEvent} />
+          </>
+        )}
+        {isLoading && (
+          <div
+            style={{
+              zIndex: 999,
+            }}
+            className=' h-full w-full absolute left-0 top-0 right-0 bottom-0 bg-black opacity-35 flex justify-center items-center '>
+            <Image
+              src={`https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExczU3OHNtbzd6djJjbXRqZWM5aGo1MWZtM2xjNmU3YmFndnM2d2F2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uIJBFZoOaifHf52MER/giphy.webp`}
+              height={300}
+              width={300}
+              alt='loading'
+              unoptimized
+            />
+          </div>
+        )}
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
