@@ -115,9 +115,9 @@ export const fetchCategories = async (days: string) => {
 };
 
 export const fetchEvents = async (days: string) => {
-  let apiData = await fetch(
-    `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
-  ).then((res) => res.json());
+  // let apiData = await fetch(
+  //   `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
+  // ).then((res) => res.json());
 
   const data: EventApi = {
     title: "EONET Events",
@@ -7150,7 +7150,7 @@ export const fetchEvents = async (days: string) => {
     ],
   };
 
-  let eventsData: Event[] = apiData["events"].map((eve: Event) => ({
+  let eventsData: Event[] = data["events"].map((eve: Event) => ({
     ...eve,
     geometries: eve.geometries.map((geometry: Geometry) => {
       const reversedCoordinates: Location = [
@@ -7163,5 +7163,6 @@ export const fetchEvents = async (days: string) => {
       };
     }),
   }));
+
   return eventsData.slice(1, 50);
 };

@@ -9,25 +9,25 @@ const Navbar = () => {
   return (
     <div className=' w-full px-4 py-2 text-white flex justify-start items-baseline space-x-7'>
       <Link
-        href={`#`}
+        href={`/`}
         className=' text-3xl font-light hover:underline hover:cursor-pointer'>
         Horizon
       </Link>
 
       <Link
-        href={`#`}
+        href={`/`}
         className=' text-lg font-light hover:cursor-pointer hover:underline'>
         Natural Events
       </Link>
 
       <Link
-        href={`#`}
+        href={`/apod`}
         className=' text-lg font-light hover:cursor-pointer hover:underline'>
         Astronomy Picture of the Day
       </Link>
 
       <Link
-        href={`#`}
+        href={`/credits`}
         className=' text-lg font-light hover:cursor-pointer hover:underline'>
         Credits
       </Link>

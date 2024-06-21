@@ -1,7 +1,7 @@
 "use client";
 import { Category, Event } from "@/typings";
 import { Select } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 type Props = {
   allCategories: Category[] | undefined;
@@ -32,14 +32,21 @@ const Controls = ({
     setCategories(allCats);
   }, [allEventsBkp]);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    getData(toDate);
+  };
+
   //   const [fromDate, setFromDate] = useState<string>(formatDate(lastWeek));
   const [toDate, setToDate] = useState<number>(15);
 
   return (
     <div className=' flex space-x-3 w-full items-baseline text-black '>
-      <div className=' flex space-x-3 flex-1 '>
-        <div className=' flex items-center space-x-2 bg-white p-3 rounded-lg'>
-          <label htmlFor='to_date_input'>To Date:</label>
+      <form className=' flex space-x-3 flex-1 ' onSubmit={handleSubmit}>
+        <div className=' flex items-center space-x-2 bg-white p-2 rounded-lg'>
+          <label htmlFor='to_date_input' className=' text-sm'>
+            Last number of days:
+          </label>
           <input
             max={50}
             min={1}
@@ -48,24 +55,24 @@ const Controls = ({
             onChange={(e) => {
               setToDate(parseInt(e.target.value));
             }}
-            className=' rounded-md border-white border bg-primary px-2 text-white h-10'
+            className=' rounded-md border-white border bg-primary px-2 text-white h-10 text-sm'
             type='number'
           />
         </div>
 
         <button
-          className=' bg-sky-500 px-5 py-1 flex items-center text-tertiary shadow-lg rounded-lg hover:bg-sky-400 active:shadow-none active:bg-sky-500'
-          onClick={() => getData(toDate)}>
+          className=' bg-sky-500 px-5 py-0 flex items-center text-tertiary shadow-lg rounded-xl hover:bg-sky-400 active:shadow-none active:bg-sky-500 text-sm'
+          type='submit'>
           GO
         </button>
-      </div>
+      </form>
 
-      <div className='flex items-center space-x-2 bg-white p-3 rounded-lg '>
-        <label>Search:</label>
+      <div className='flex items-center space-x-2 bg-white p-2 rounded-lg '>
+        <label className=' text-sm'>Search:</label>
         <input
           type='text'
           onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-          className=' rounded-md border-white border bg-primary px-2 text-white h-10'
+          className=' rounded-md border-white border bg-primary px-2 text-white h-10 text-sm'
         />
         <label>Filter:</label>
         <Select

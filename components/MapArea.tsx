@@ -45,7 +45,7 @@ const MapArea = ({
             eventHandlers={{
               click: () => selectEvent(eve),
             }}>
-            <Tooltip direction='bottom' offset={[-20, -20]} opacity={0.7}>
+            <Tooltip direction='bottom' offset={[-20, 10]} opacity={0.7}>
               {eve.title}
             </Tooltip>
           </Marker>
