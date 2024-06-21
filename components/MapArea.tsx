@@ -1,5 +1,5 @@
 import React from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import FlyToMarker from "./FlyToMarker";
 import { Event, Location } from "@/typings";
 import { getCategoryIcon } from "@/utils/DefaultHelper";
@@ -34,11 +34,21 @@ const MapArea = ({
         return (
           <Marker
             key={eve.id}
-            position={eve.geometries[0]?.coordinates || defaultPosition}
+            riseOnHover
+            position={
+              [
+                eve?.geometries[0].coordinates[0],
+                eve?.geometries[0].coordinates[1] - 0.002,
+              ] || defaultPosition
+            }
             icon={getCategoryIcon(eve.categories[0].title)}
             eventHandlers={{
               click: () => selectEvent(eve),
-            }}></Marker>
+            }}>
+            <Tooltip direction='bottom' offset={[-20, -20]} opacity={0.7}>
+              {eve.title}
+            </Tooltip>
+          </Marker>
         );
       })}
 

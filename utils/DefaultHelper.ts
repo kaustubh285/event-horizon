@@ -18,12 +18,14 @@ const categoryIconMapper: Record<KnownCategoryNames, string> = {
 };
 
 export function getCategoryIcon(category: KnownCategoryNames) {
+  let iconUrl = "marker-icons/red-marker.svg";
+  if (Object.keys(categoryIconMapper).includes(category)) {
+    iconUrl = `marker-icons/${categoryIconMapper[category]}`;
+  }
   const icon: Icon = new Icon({
-    iconUrl:
-      `marker-icons/${categoryIconMapper[category]}` ||
-      "marker-icons/red-marker.svg",
+    iconUrl: iconUrl,
     iconSize: [20, 23],
-    iconAnchor: [30, 41],
+    iconAnchor: [20, 23],
   });
 
   return icon;
@@ -31,4 +33,12 @@ export function getCategoryIcon(category: KnownCategoryNames) {
 
 export function findCategoryImage(category: KnownCategoryNames) {
   return "/marker-icons/" + categoryIconMapper[category];
+}
+
+export function convertTZ(date: Date | string, tzString: string) {
+  return new Date(
+    (typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {
+      timeZone: tzString,
+    })
+  );
 }

@@ -1,120 +1,124 @@
 import { Event, EventApi, Geometry, Location } from "@/typings";
 
-export const fetchCategories = async () => {
-  // let data = await fetch(
-  //   `https://eonet.gsfc.nasa.gov/api/v2.1/categories`
-  // ).then((res) => res.json());
-
-  const data = [
-    {
-      id: 6,
-      title: "Drought",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/6",
-      description:
-        "Long lasting absence of precipitation affecting agriculture and livestock, and the overall availability of food and water.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/6",
-    },
-    {
-      id: 7,
-      title: "Dust and Haze",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/7",
-      description:
-        "Related to dust storms, air pollution and other non-volcanic aerosols. Volcano-related plumes shall be included with the originating eruption event.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/7",
-    },
-    {
-      id: 16,
-      title: "Earthquakes",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/16",
-      description:
-        "Related to all manner of shaking and displacement. Certain aftermath of earthquakes may also be found under landslides and floods.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/16",
-    },
-    {
-      id: 9,
-      title: "Floods",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/9",
-      description:
-        "Related to aspects of actual flooding--e.g., inundation, water extending beyond river and lake extents.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/9",
-    },
-    {
-      id: 14,
-      title: "Landslides",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/14",
-      description:
-        "Related to landslides and variations thereof: mudslides, avalanche.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/14",
-    },
-    {
-      id: 19,
-      title: "Manmade",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/19",
-      description:
-        "Events that have been human-induced and are extreme in their extent.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/19",
-    },
-    {
-      id: 15,
-      title: "Sea and Lake Ice",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/15",
-      description:
-        "Related to all ice that resides on oceans and lakes, including sea and lake ice (permanent and seasonal) and icebergs.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/15",
-    },
-    {
-      id: 10,
-      title: "Severe Storms",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/10",
-      description:
-        "Related to the atmospheric aspect of storms (hurricanes, cyclones, tornadoes, etc.). Results of storms may be included under floods, landslides, etc.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/10",
-    },
-    {
-      id: 17,
-      title: "Snow",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/17",
-      description:
-        "Related to snow events, particularly extreme/anomalous snowfall in either timing or extent/depth.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/17",
-    },
-    {
-      id: 18,
-      title: "Temperature Extremes",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/18",
-      description:
-        "Related to anomalous land temperatures, either heat or cold.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/18",
-    },
-    {
-      id: 12,
-      title: "Volcanoes",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/12",
-      description:
-        "Related to both the physical effects of an eruption (rock, ash, lava) and the atmospheric (ash and gas plumes).",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/12",
-    },
-    {
-      id: 13,
-      title: "Water Color",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/13",
-      description:
-        "Related to events that alter the appearance of water: phytoplankton, red tide, algae, sediment, whiting, etc.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/13",
-    },
-    {
-      id: 8,
-      title: "Wildfires",
-      link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/8",
-      description:
-        "Wildfires includes all nature of fire, including forest and plains fires, as well as urban and industrial fire events. Fires may be naturally caused or manmade.",
-      layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/8",
-    },
-  ];
+export const fetchCategories = async (days: string) => {
+  let data = await fetch(
+    `https://eonet.gsfc.nasa.gov/api/v2.1/categories`
+  ).then((res) => res.json());
+  data = data["categories"];
+  // const data = [
+  //   {
+  //     id: 6,
+  //     title: "Drought",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/6",
+  //     description:
+  //       "Long lasting absence of precipitation affecting agriculture and livestock, and the overall availability of food and water.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/6",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Dust and Haze",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/7",
+  //     description:
+  //       "Related to dust storms, air pollution and other non-volcanic aerosols. Volcano-related plumes shall be included with the originating eruption event.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/7",
+  //   },
+  //   {
+  //     id: 16,
+  //     title: "Earthquakes",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/16",
+  //     description:
+  //       "Related to all manner of shaking and displacement. Certain aftermath of earthquakes may also be found under landslides and floods.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/16",
+  //   },
+  //   {
+  //     id: 9,
+  //     title: "Floods",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/9",
+  //     description:
+  //       "Related to aspects of actual flooding--e.g., inundation, water extending beyond river and lake extents.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/9",
+  //   },
+  //   {
+  //     id: 14,
+  //     title: "Landslides",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/14",
+  //     description:
+  //       "Related to landslides and variations thereof: mudslides, avalanche.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/14",
+  //   },
+  //   {
+  //     id: 19,
+  //     title: "Manmade",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/19",
+  //     description:
+  //       "Events that have been human-induced and are extreme in their extent.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/19",
+  //   },
+  //   {
+  //     id: 15,
+  //     title: "Sea and Lake Ice",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/15",
+  //     description:
+  //       "Related to all ice that resides on oceans and lakes, including sea and lake ice (permanent and seasonal) and icebergs.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/15",
+  //   },
+  //   {
+  //     id: 10,
+  //     title: "Severe Storms",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/10",
+  //     description:
+  //       "Related to the atmospheric aspect of storms (hurricanes, cyclones, tornadoes, etc.). Results of storms may be included under floods, landslides, etc.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/10",
+  //   },
+  //   {
+  //     id: 17,
+  //     title: "Snow",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/17",
+  //     description:
+  //       "Related to snow events, particularly extreme/anomalous snowfall in either timing or extent/depth.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/17",
+  //   },
+  //   {
+  //     id: 18,
+  //     title: "Temperature Extremes",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/18",
+  //     description:
+  //       "Related to anomalous land temperatures, either heat or cold.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/18",
+  //   },
+  //   {
+  //     id: 12,
+  //     title: "Volcanoes",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/12",
+  //     description:
+  //       "Related to both the physical effects of an eruption (rock, ash, lava) and the atmospheric (ash and gas plumes).",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/12",
+  //   },
+  //   {
+  //     id: 13,
+  //     title: "Water Color",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/13",
+  //     description:
+  //       "Related to events that alter the appearance of water: phytoplankton, red tide, algae, sediment, whiting, etc.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/13",
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Wildfires",
+  //     link: "https://eonet.gsfc.nasa.gov/api/v2.1/categories/8",
+  //     description:
+  //       "Wildfires includes all nature of fire, including forest and plains fires, as well as urban and industrial fire events. Fires may be naturally caused or manmade.",
+  //     layers: "https://eonet.gsfc.nasa.gov/api/v2.1/layers/8",
+  //   },
+  // ];
   return data;
 };
 
-export const fetchEvents = async () => {
+export const fetchEvents = async (days: string) => {
+  let apiData = await fetch(
+    `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
+  ).then((res) => res.json());
+
   const data: EventApi = {
     title: "EONET Events",
     description: "Natural events from EONET.",
@@ -7146,7 +7150,7 @@ export const fetchEvents = async () => {
     ],
   };
 
-  let eventsData: Event[] = data["events"].map((eve: Event) => ({
+  let eventsData: Event[] = apiData["events"].map((eve: Event) => ({
     ...eve,
     geometries: eve.geometries.map((geometry: Geometry) => {
       const reversedCoordinates: Location = [
@@ -7159,5 +7163,5 @@ export const fetchEvents = async () => {
       };
     }),
   }));
-  return eventsData.slice(0, 5);
+  return eventsData.slice(1, 50);
 };

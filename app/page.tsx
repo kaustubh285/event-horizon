@@ -39,3 +39,5 @@ export default function Home() {
 }
 
 // <a href="https://www.flaticon.com/free-icons/wildfire" title="wildfire icons">Wildfire icons created by BZZRINCANTATION - Flaticon</a>
+
+//<a href="https://www.flaticon.com/free-icons/environment" title="environment icons">Environment icons created by Pixelmeetup - Flaticon</a>
