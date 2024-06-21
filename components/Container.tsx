@@ -18,12 +18,28 @@ const Container = () => {
   const [allEventsBkp, setAllEventsBkp] = useState<Event[] | []>();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>();
+  const [selectedFilter, setSelectedFilter] = useState<string>("");
 
   const getData = (days: number) => {
     handleFetch(setAllCategories, setAllEvents, days, setAllEventsBkp);
   };
 
   // useEffect(()=>getData(15), []);
+
+  useEffect(() => {
+    if (selectedFilter === "all") {
+      setAllEvents(allEventsBkp);
+      return;
+    }
+    const searchedEvents: Event[] =
+      allEventsBkp?.filter((eve: Event) =>
+        eve.categories.some((cat) =>
+          cat.title.toLowerCase().includes(selectedFilter)
+        )
+      ) || [];
+
+    setAllEvents(searchedEvents);
+  }, [selectedFilter, allEventsBkp]);
 
   useEffect(() => {
     if (searchQuery === "") {
@@ -50,8 +66,9 @@ const Container = () => {
       <Controls
         allCategories={allCategories}
         getData={getData}
-        allEvents={allEvents}
+        allEventsBkp={allEventsBkp}
         setSearchQuery={setSearchQuery}
+        setSelectedFilter={setSelectedFilter}
       />
       <div className=' h-full flex flex-col space-x-4 md:flex-row  items-stretch justify-around'>
         <MapArea

@@ -6,15 +6,17 @@ import React, { useEffect, useState } from "react";
 type Props = {
   allCategories: Category[] | undefined;
   getData: (arg0: number) => void;
-  allEvents: Event[] | undefined;
+  allEventsBkp: Event[] | undefined;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Controls = ({
   allCategories,
   getData,
-  allEvents,
+  allEventsBkp,
   setSearchQuery,
+  setSelectedFilter,
 }: Props) => {
   // Get today's date and a date one week ago
   let today = new Date();
@@ -23,12 +25,12 @@ const Controls = ({
 
   useEffect(() => {
     let allCats: string[] = [];
-    allEvents?.forEach((eve: Event) => {
+    allEventsBkp?.forEach((eve: Event) => {
       if (!allCats.includes(eve.categories[0].title))
         allCats.push(eve.categories[0].title);
     });
     setCategories(allCats);
-  }, [allEvents]);
+  }, [allEventsBkp]);
 
   //   const [fromDate, setFromDate] = useState<string>(formatDate(lastWeek));
   const [toDate, setToDate] = useState<number>(15);
@@ -66,7 +68,9 @@ const Controls = ({
           className=' rounded-md border-white border bg-primary px-2 text-white h-10'
         />
         <label>Filter:</label>
-        <Select variant='flushed'>
+        <Select
+          variant='flushed'
+          onChange={(e) => setSelectedFilter(e.target.value)}>
           <option value={"all"}>All</option>
           {/* {allCategories?.length &&
             allCategories.map((cat: Category) => (
