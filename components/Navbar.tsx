@@ -5,7 +5,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <div className=' w-full px-4 py-2 text-white flex justify-start items-baseline space-x-7'>
       <Link

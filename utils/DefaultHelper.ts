@@ -1,4 +1,4 @@
-import { KnownCategoryNames } from "@/typings";
+import { Event, KnownCategoryNames, localEvent } from "@/typings";
 import { Icon } from "leaflet";
 
 const categoryIconMapper: Record<KnownCategoryNames, string> = {
@@ -40,5 +40,32 @@ export function convertTZ(date: Date | string, tzString: string) {
     (typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {
       timeZone: tzString,
     })
+  );
+}
+
+export function getLocalData(days: number) {
+  const localEvents = localStorage.getItem("events");
+  if (localEvents) {
+    const latest: localEvent = JSON.parse(localEvents);
+
+    var savedDate = new Date(latest.date);
+    var todaysDate = new Date();
+
+    // call setHours to take the time out of the comparison
+    if (
+      savedDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0) &&
+      days == latest.days
+    ) {
+      return latest.events;
+    }
+  }
+
+  return false;
+}
+
+export function saveLocalData(events: Event[], days: number) {
+  localStorage.setItem(
+    "events",
+    JSON.stringify({ date: new Date(), events: events, days: days })
   );
 }

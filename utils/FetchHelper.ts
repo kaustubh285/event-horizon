@@ -1,4 +1,5 @@
 import { Apod, Category, Event } from "@/typings";
+import { saveLocalData } from "./DefaultHelper";
 
 export async function handleFetch(
   setAllCategories: React.Dispatch<
@@ -22,6 +23,7 @@ export async function handleFetch(
   let data = await getEvents.json();
   setAllEvents(data);
   setAllEventsBkp(data);
+  saveLocalData(data, days);
   setIsLoading(false);
 }
 

@@ -123,9 +123,9 @@ export const fetchApod = async () => {
 };
 
 export const fetchEvents = async (days: string) => {
-  let apiData = await fetch(
-    `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
-  ).then((res) => res.json());
+  // let apiData = await fetch(
+  //   `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
+  // ).then((res) => res.json());
 
   const data: EventApi = {
     title: "EONET Events",
