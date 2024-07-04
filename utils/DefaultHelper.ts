@@ -43,29 +43,29 @@ export function convertTZ(date: Date | string, tzString: string) {
   );
 }
 
-export function getLocalData(days: number) {
-  const localEvents = localStorage.getItem("events");
-  if (localEvents) {
-    const latest: localEvent = JSON.parse(localEvents);
+// export function getLocalData(days: number) {
+//   const localEvents = localStorage.getItem("events");
+//   if (localEvents) {
+//     const latest: localEvent = JSON.parse(localEvents);
 
-    var savedDate = new Date(latest.date);
-    var todaysDate = new Date();
+//     var savedDate = new Date(latest.date);
+//     var todaysDate = new Date();
 
-    // call setHours to take the time out of the comparison
-    if (
-      savedDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0) &&
-      days == latest.days
-    ) {
-      return latest.events;
-    }
-  }
+//     // call setHours to take the time out of the comparison
+//     if (
+//       savedDate.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0) &&
+//       days == latest.days
+//     ) {
+//       return latest.events;
+//     }
+//   }
 
-  return false;
-}
+//   return false;
+// }
 
-export function saveLocalData(events: Event[], days: number) {
-  localStorage.setItem(
-    "events",
-    JSON.stringify({ date: new Date(), events: events, days: days })
-  );
-}
+// export function saveLocalData(events: Event[], days: number) {
+//   localStorage.setItem(
+//     "events",
+//     JSON.stringify({ date: new Date(), events: events, days: days })
+//   );
+// }

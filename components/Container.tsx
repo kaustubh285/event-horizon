@@ -12,7 +12,6 @@ import MapArea from "./MapArea";
 import Controls from "./Controls";
 import Wrapper from "./Wrapper";
 import Image from "next/image";
-import { getLocalData } from "@/utils/DefaultHelper";
 
 const Container = () => {
   const defaultPosition: Location = [11.505, 10.09];
@@ -25,20 +24,13 @@ const Container = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getData = (days: number) => {
-    let localDataCheck = getLocalData(days);
-    if (localDataCheck === false) {
-      handleFetch(
-        setAllCategories,
-        setAllEvents,
-        days,
-        setAllEventsBkp,
-        setIsLoading
-      );
-    } else {
-      setAllEvents(localDataCheck);
-      setAllEventsBkp(localDataCheck);
-      setIsLoading(false);
-    }
+    handleFetch(
+      setAllCategories,
+      setAllEvents,
+      days,
+      setAllEventsBkp,
+      setIsLoading
+    );
   };
 
   useEffect(() => {
