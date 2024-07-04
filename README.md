@@ -1,3 +1,5 @@
+[](https://github.com/kaustubh285/event-horizon/blob/main/public/event-horizon.png?raw=true)
+
 # Event Horizon
 
 Event Horizon is a Next.js web application designed to provide up-to-date information on natural events such as wildfires, volcanoes, ice caps melting, thunderstorms etc. The data is sourced from NASA's public API, ensuring accurate and timely updates.

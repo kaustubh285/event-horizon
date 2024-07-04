@@ -22,7 +22,7 @@ const Container = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>();
   const [selectedFilter, setSelectedFilter] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getData = (days: number) => {
     let localDataCheck = getLocalData(days);
@@ -41,7 +41,9 @@ const Container = () => {
     }
   };
 
-  useEffect(() => getData(15), []);
+  useEffect(() => {
+    getData(15);
+  }, []);
 
   useEffect(() => {
     if (selectedFilter === "all") {
@@ -100,19 +102,45 @@ const Container = () => {
           </>
         )}
         {isLoading && (
-          <div
-            style={{
-              zIndex: 999,
-            }}
-            className=' h-full w-full absolute left-0 top-0 right-0 bottom-0 bg-black opacity-35 flex justify-center items-center rounded-2xl'>
-            <Image
-              src={`https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExczU3OHNtbzd6djJjbXRqZWM5aGo1MWZtM2xjNmU3YmFndnM2d2F2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uIJBFZoOaifHf52MER/giphy.webp`}
-              height={300}
-              width={300}
-              alt='loading'
-              unoptimized
-            />
-          </div>
+          <>
+            {/* <div
+              style={{
+                zIndex: 999,
+              }}
+              className=' h-full w-full absolute left-0 top-0 right-0 bottom-0 opacity-100 flex flex-col justify-center items-center rounded-2xl'>
+              {" "}
+              <Image
+                src={"/event-horizon.png"}
+                height={200}
+                width={200}
+                alt=''
+                className=' absolute top-20'
+              />
+            </div> */}
+            <div
+              style={{
+                zIndex: 999,
+              }}
+              className=' h-full w-full absolute left-0 top-0 right-0 bottom-0  flex flex-col justify-center items-center rounded-2xl'>
+              {/* <Image
+                src={`https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExczU3OHNtbzd6djJjbXRqZWM5aGo1MWZtM2xjNmU3YmFndnM2d2F2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uIJBFZoOaifHf52MER/giphy.webp`}
+                height={300}
+                width={300}
+                alt='loading'
+                className=' bottom-30 absolute'
+                unoptimized
+              /> */}
+
+              <Image
+                src={"/event-horizon.png"}
+                height={200}
+                width={200}
+                alt=''
+                className=' absolute top-20'
+              />
+              <p className=' text-2xl '>Loading...</p>
+            </div>
+          </>
         )}
       </div>
     </Wrapper>
