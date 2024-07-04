@@ -1,4 +1,4 @@
-[event-horizon](https://github.com/kaustubh285/event-horizon/blob/main/public/event-horizon.png?raw=true)
+![event-horizon](https://github.com/kaustubh285/event-horizon/blob/main/public/event-horizon.png?raw=true)
 
 # Event Horizon
 
