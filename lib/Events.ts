@@ -114,10 +114,18 @@ export const fetchCategories = async (days: string) => {
   return data;
 };
 
+export const fetchApod = async () => {
+  let data = await fetch(
+    `https://api.nasa.gov/planetary/apod?api_key=${process.env.API_KEY}`
+  ).then((res) => res.json());
+
+  return data;
+};
+
 export const fetchEvents = async (days: string) => {
-  // let apiData = await fetch(
-  //   `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
-  // ).then((res) => res.json());
+  let apiData = await fetch(
+    `https://eonet.gsfc.nasa.gov/api/v2.1/events?days=${days}&api_key=${process.env.API_KEY}`
+  ).then((res) => res.json());
 
   const data: EventApi = {
     title: "EONET Events",
@@ -7164,5 +7172,5 @@ export const fetchEvents = async (days: string) => {
     }),
   }));
 
-  return eventsData.slice(1, 50);
+  return eventsData;
 };

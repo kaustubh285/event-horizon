@@ -2,7 +2,8 @@ import React from "react";
 import { MapContainer, Marker, Popup, TileLayer, Tooltip } from "react-leaflet";
 import FlyToMarker from "./FlyToMarker";
 import { Event, Location } from "@/typings";
-import { getCategoryIcon } from "@/utils/DefaultHelper";
+import { convertTZ, getCategoryIcon } from "@/utils/DefaultHelper";
+import Link from "next/link";
 
 type Props = {
   defaultPosition: Location;
@@ -17,6 +18,7 @@ const MapArea = ({
   selectEvent,
   selectedEvent,
 }: Props) => {
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   return (
     <MapContainer
       center={defaultPosition}
@@ -56,11 +58,42 @@ const MapArea = ({
         <>
           <Popup
             position={[
-              selectedEvent?.geometries[0].coordinates[0] + 0.002,
+              selectedEvent?.geometries[0].coordinates[0] + 0.001,
               selectedEvent?.geometries[0].coordinates[1],
             ]}>
-            <p className=' font-semibold'>{selectedEvent.title}</p>
-            <p className=' text-xs font-light'>{selectedEvent?.description}</p>
+            <div className=' flex flex-col justify-around space-y-3'>
+              <p className=' font-semibold text-xl'>{selectedEvent.title}</p>
+              <p className=' text-sm'>
+                {selectedEvent.description || (
+                  <span className=' font-extralight'>
+                    Detailed information unavailable
+                  </span>
+                )}
+              </p>
+              <p className=' text-sm'>
+                Occured at :
+                {convertTZ(
+                  selectedEvent.geometries[0].date,
+                  tz
+                ).toLocaleString()}
+              </p>
+              <p className='text-xs  text-slate-700 text-wrap w-full'>
+                Source:
+                <span>
+                  {"  "}
+                  {selectedEvent.sources[0].id}
+                </span>
+              </p>
+
+              <p className=' text-xs font-light text-slate-700 text-wrap w-full'>
+                For more information:{" "}
+                <Link
+                  href={selectedEvent.sources[0].url}
+                  className='font-normal hover:underline text-wrap w-full'>
+                  {selectedEvent.sources[0].url}
+                </Link>
+              </p>
+            </div>
           </Popup>
           <FlyToMarker
             position={selectedEvent?.geometries[0].coordinates}
