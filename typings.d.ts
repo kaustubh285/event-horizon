@@ -63,3 +63,9 @@ export type Apod = {
   title: string;
   url: string;
 };
+
+export interface localEvent {
+  date: string;
+  events: Event[];
+  days: number;
+}
