@@ -53,9 +53,17 @@ const EventSidebarAccordion = ({ event, selectEvent }: Props) => {
         <p className=' text-xs font-light text-tertiary text-wrap w-full'>
           For more information:{" "}
           <Link
+            target='_blank'
             href={event.sources[0].url}
-            className=' hover:text-blue-300 hover:underline text-wrap w-full'>
-            {event.sources[0].url}
+            className=' hover:text-blue-300 hover:underline text-wrap w-full flex space-x-2'>
+            {event.sources[0].url}{" "}
+            <Image
+              src='/new-tab.png'
+              height={10}
+              width={15}
+              alt='[]->'
+              className=' ml-1'
+            />
           </Link>
         </p>
 

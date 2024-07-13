@@ -80,6 +80,13 @@ const page = () => {
           <Link
             target='_blank'
             className='hover:underline'
+            href='https://www.flaticon.com/free-icons/new-tab'
+            title='new tab icons'>
+            New tab icons created by mavadee - Flaticon
+          </Link>
+          <Link
+            target='_blank'
+            className='hover:underline'
             href='https://www.flaticon.com/free-icons/environment'
             title='environment icons'>
             Environment icons created by Pixelmeetup - Flaticon
