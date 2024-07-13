@@ -11,14 +11,10 @@ export async function handleFetch(
 ) {
   setIsLoading(true);
   //   Fetch types of categories for dropdown menu
-  const getCategories = await fetch(
-    `http://localhost:3000/api/categories/?days=${days}`
-  );
+  const getCategories = await fetch(`/api/categories/?days=${days}`);
   setAllCategories(await getCategories.json());
 
-  const getEvents = await fetch(
-    `http://localhost:3000/api/events/?days=${days}`
-  );
+  const getEvents = await fetch(`/api/events/?days=${days}`);
   let data = await getEvents.json();
   setAllEvents(data);
   setAllEventsBkp(data);
