@@ -25,7 +25,7 @@ export async function handleFetch(
 export async function handleApodFetch(
   setApodData: React.Dispatch<React.SetStateAction<Apod>>
 ) {
-  const getPictureApi = await fetch(`http://localhost:3000/api/apod/`);
+  const getPictureApi = await fetch(`/api/apod/`);
   setApodData(await getPictureApi.json());
   // setApodData({
   //   copyright: "Long Xin",
